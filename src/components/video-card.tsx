@@ -1,5 +1,16 @@
 import * as React from "react"
-import { string } from "prop-types"
+
+const YouTube = React.lazy(() => import("react-youtube"))
+
+const opts = {
+  height: "390",
+  width: "640",
+  playerVars: {
+    // https://developers.google.com/youtube/player_parameters
+    autoplay: 0,
+    modestbranding: 1,
+  },
+}
 
 export interface Video {
   videoId: string
@@ -19,20 +30,35 @@ const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
   const firstParagraph =
     (Array.isArray(firstParagraphMatch) && firstParagraphMatch[1]) || null
 
+  console.log(video)
+  const date = new Intl.DateTimeFormat(navigator?.language || "en-US").format(
+    new Date(video.publishedAt)
+  )
+
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg">
       <div className="flex-shrink-0">
-        <img
-          className="object-cover w-full h-48"
-          src={video.thumbnail?.url}
-          alt={video.title}
-        />
+        <React.Suspense
+          fallback={
+            <img
+              className="object-cover w-full h-48"
+              src={video.thumbnail?.url}
+              alt={video.title}
+            />
+          }
+        >
+          <YouTube
+            videoId={video.videoId}
+            opts={opts}
+            className="object-cover w-full h-48"
+          />
+        </React.Suspense>
       </div>
       <div className="flex flex-col justify-between flex-1 p-6 bg-white">
         <div className="flex-1">
           <p className="text-sm font-medium leading-5 text-indigo-600">
             <a href="#" className="hover:underline">
-              Blog
+              Video
             </a>
           </p>
           <a href="#" className="block">
@@ -61,9 +87,7 @@ const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
               </a>
             </p>
             <div className="flex text-sm leading-5 text-gray-500">
-              <time dateTime="2020-03-16">Mar 16, 2020</time>
-              <span className="mx-1">&middot;</span>
-              <span>6 min read</span>
+              <time dateTime={date}>{date}</time>
             </div>
           </div>
         </div>

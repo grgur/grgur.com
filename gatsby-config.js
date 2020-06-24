@@ -28,6 +28,14 @@ module.exports = {
       },
     },
     `gatsby-plugin-postcss`,
+    {
+      resolve: `gatsby-source-youtube-v2`,
+      options: {
+        channelId: ["UCsKwL0-e2eHRNa6Ne99AESw"],
+        apiKey: "AIzaSyCZrhJlvE0xYBz-PIr4myisC2er8IE9xNo",
+        maxVideos: 20, // Defaults to 50
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

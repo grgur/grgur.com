@@ -45,6 +45,13 @@ const SEO: React.SFC<SeoProps> = ({
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
+      link={[
+        {
+          href:
+            "https://fonts.googleapis.com/css2?family=Fjalla+One&family=Noto+Sans&display=swap",
+          rel: "stylesheet",
+        },
+      ]}
       meta={[
         {
           name: `description`,

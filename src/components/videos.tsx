@@ -36,19 +36,21 @@ const Videos: React.SFC<VideosProps> = () => {
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-            From the blog
+            Recent YouTube Videos
           </h2>
           <p className="max-w-2xl mx-auto mt-3 text-xl leading-7 text-gray-500 sm:mt-4">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa
-            libero labore natus atque, ducimus sed.
+            My video content is all about the web stack, developer productivity,
+            and teamwork. I try to solve real problems based on the actual
+            solutions inspired from my work with some of the greatest companies
+            on Earth.
           </p>
         </div>
         <div className="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
-          {data.allYoutubeVideo.edges.map(
-            ({ node: video }: { node: Video }) => (
+          {data.allYoutubeVideo.edges
+            .slice(0, 9) // just 9 is enough
+            .map(({ node: video }: { node: Video }) => (
               <VideoCard video={video} key={video.videoId} />
-            )
-          )}
+            ))}
         </div>
       </div>
     </div>

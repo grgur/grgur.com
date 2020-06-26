@@ -47,8 +47,8 @@ function forHumans(duration) {
     [Math.floor(seconds / 31536000), "years"],
     [Math.floor((seconds % 31536000) / 86400), "days"],
     [Math.floor(((seconds % 31536000) % 86400) / 3600), "hours"],
-    [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), "minutes"],
-    [(((seconds % 31536000) % 86400) % 3600) % 60, "seconds"],
+    [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), "min"],
+    [(((seconds % 31536000) % 86400) % 3600) % 60, "sec"],
   ]
   let returntext = ""
 
@@ -115,8 +115,8 @@ const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
             <a href="#">
               <img
                 className="w-10 h-10 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+                src="https://res.cloudinary.com/grguru/image/upload/c_fill,f_auto,g_face,h_80,q_auto,w_80/v1593166220/grgur/straight-hair.jpg"
+                alt="Grgur Grisogono"
               />
             </a>
           </div>

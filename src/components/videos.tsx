@@ -18,6 +18,10 @@ const Videos: React.SFC<VideosProps> = () => {
             }
             publishedAt
             privacyStatus
+            tags
+            contentDetails {
+              duration
+            }
           }
         }
       }

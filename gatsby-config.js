@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Grgur Grisogono`,
+    description: `Who the heck is Grgur Grisogono?`,
+    author: `@ggrgur`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -29,7 +29,7 @@ module.exports = {
     },
     `gatsby-plugin-postcss`,
     {
-      resolve: `gatsby-source-youtube-v2`,
+      resolve: `@grgur/gatsby-source-youtube-v3`,
       options: {
         channelId: ["UCsKwL0-e2eHRNa6Ne99AESw"],
         apiKey: "AIzaSyCZrhJlvE0xYBz-PIr4myisC2er8IE9xNo",

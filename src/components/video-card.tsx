@@ -25,12 +25,51 @@ export interface VideoCardProps {
   video: Video
 }
 
+function YTDurationToSeconds(duration) {
+  let match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/)
+
+  match = match.slice(1).map(function (x) {
+    if (x != null) {
+      return x.replace(/\D/, "")
+    }
+  })
+
+  const hours = parseInt(match[0]) || 0
+  const minutes = parseInt(match[1]) || 0
+  const seconds = parseInt(match[2]) || 0
+
+  return hours * 3600 + minutes * 60 + seconds
+}
+
+function forHumans(duration) {
+  const seconds = YTDurationToSeconds(duration)
+  const levels = [
+    [Math.floor(seconds / 31536000), "years"],
+    [Math.floor((seconds % 31536000) / 86400), "days"],
+    [Math.floor(((seconds % 31536000) % 86400) / 3600), "hours"],
+    [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), "minutes"],
+    [(((seconds % 31536000) % 86400) % 3600) % 60, "seconds"],
+  ]
+  let returntext = ""
+
+  for (let i = 0, max = levels.length; i < max; i++) {
+    if (levels[i][0] === 0) continue
+    returntext +=
+      " " +
+      levels[i][0] +
+      " " +
+      (levels[i][0] === 1
+        ? levels[i][1].substr(0, levels[i][1].length - 1)
+        : levels[i][1])
+  }
+  return returntext.trim()
+}
+
 const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
   const firstParagraphMatch = video.description.match(/^(.*)\n/)
   const firstParagraph =
     (Array.isArray(firstParagraphMatch) && firstParagraphMatch[1]) || null
 
-  console.log(video)
   const date = new Intl.DateTimeFormat(navigator?.language || "en-US").format(
     new Date(video.publishedAt)
   )
@@ -57,9 +96,10 @@ const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
       <div className="flex flex-col justify-between flex-1 p-6 bg-white">
         <div className="flex-1">
           <p className="text-sm font-medium leading-5 text-indigo-600">
-            <a href="#" className="hover:underline">
-              Video
-            </a>
+            {video.tags
+              .slice(0, 2)
+              .map(tag => tag.charAt(0).toUpperCase() + tag.slice(1))
+              .join(", ")}
           </p>
           <a href="#" className="block">
             <h3 className="mt-2 text-xl font-semibold leading-7 text-gray-900">
@@ -88,6 +128,8 @@ const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
             </p>
             <div className="flex text-sm leading-5 text-gray-500">
               <time dateTime={date}>{date}</time>
+              <span className="mx-1">&middot;</span>
+              <span>{forHumans(video.contentDetails.duration)}</span>
             </div>
           </div>
         </div>

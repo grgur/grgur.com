@@ -9,7 +9,7 @@ exports[`Header renders correctly 1`] = `
     style={
       Object {
         "backgroundColor": "#0D0403",
-        "backgroundImage": "url(https://res.cloudinary.com/grguru/image/upload/c_scale,e_art:incognito,f_auto,w_1024/v1593166618/grgur/J1920x1080-00355.jpg)",
+        "backgroundImage": "url(https://res.cloudinary.com/grguru/image/upload/c_scale,e_art:incognito,f_auto,w_1024/v1594027693/grgur/IMG_2711.jpg)",
       }
     }
   />
@@ -67,6 +67,7 @@ exports[`Header renders correctly 1`] = `
     >
       <div
         className="text-center"
+        data-testid="title"
       >
         <h2
           className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl"

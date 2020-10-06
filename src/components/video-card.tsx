@@ -1,4 +1,5 @@
 import * as React from "react"
+import { InView } from "react-intersection-observer"
 
 const YouTube = React.lazy(() => import("react-youtube"))
 
@@ -65,7 +66,7 @@ function forHumans(duration) {
   return returntext.trim()
 }
 
-const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   const firstParagraphMatch = video.description.match(/^(.*)\n/)
   const firstParagraph =
     (Array.isArray(firstParagraphMatch) && firstParagraphMatch[1]) || null
@@ -76,23 +77,27 @@ const VideoCard: React.SFC<VideoCardProps> = ({ video }) => {
 
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg">
-      <div className="flex-shrink-0">
-        <React.Suspense
-          fallback={
-            <img
-              className="object-cover w-full h-48"
-              src={video.thumbnail?.url}
-              alt={video.title}
-            />
-          }
-        >
-          <YouTube
-            videoId={video.videoId}
-            opts={opts}
-            className="object-cover w-full h-48"
-          />
-        </React.Suspense>
-      </div>
+      <InView>
+        {({ ref }) => (
+          <div ref={ref} className="flex-shrink-0">
+            <React.Suspense
+              fallback={
+                <img
+                  className="object-cover w-full h-48"
+                  src={video.thumbnail?.url}
+                  alt={video.title}
+                />
+              }
+            >
+              <YouTube
+                videoId={video.videoId}
+                opts={opts}
+                className="object-cover w-full h-48"
+              />
+            </React.Suspense>
+          </div>
+        )}
+      </InView>
       <div className="flex flex-col justify-between flex-1 p-6 bg-white">
         <div className="flex-1">
           <p className="text-sm font-medium leading-5 text-indigo-600">

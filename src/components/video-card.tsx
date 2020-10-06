@@ -1,5 +1,6 @@
 import * as React from "react"
 import { InView } from "react-intersection-observer"
+import { isSSR } from "../utils/ssr"
 
 const YouTube = React.lazy(() => import("react-youtube"))
 
@@ -71,33 +72,35 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   const firstParagraph =
     (Array.isArray(firstParagraphMatch) && firstParagraphMatch[1]) || null
 
-  const date = new Intl.DateTimeFormat(navigator?.language || "en-US").format(
-    new Date(video.publishedAt)
-  )
+  const date = new Intl.DateTimeFormat(
+    (!isSSR && navigator?.language) || "en-US"
+  ).format(new Date(video.publishedAt))
 
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg">
-      <InView>
-        {({ ref }) => (
-          <div ref={ref} className="flex-shrink-0">
-            <React.Suspense
-              fallback={
-                <img
+      {isSSR ? null : (
+        <InView>
+          {({ ref }) => (
+            <div ref={ref} className="flex-shrink-0">
+              <React.Suspense
+                fallback={
+                  <img
+                    className="object-cover w-full h-48"
+                    src={video.thumbnail?.url}
+                    alt={video.title}
+                  />
+                }
+              >
+                <YouTube
+                  videoId={video.videoId}
+                  opts={opts}
                   className="object-cover w-full h-48"
-                  src={video.thumbnail?.url}
-                  alt={video.title}
                 />
-              }
-            >
-              <YouTube
-                videoId={video.videoId}
-                opts={opts}
-                className="object-cover w-full h-48"
-              />
-            </React.Suspense>
-          </div>
-        )}
-      </InView>
+              </React.Suspense>
+            </div>
+          )}
+        </InView>
+      )}
       <div className="flex flex-col justify-between flex-1 p-6 bg-white">
         <div className="flex-1">
           <p className="text-sm font-medium leading-5 text-indigo-600">

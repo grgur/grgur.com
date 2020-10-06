@@ -44,7 +44,7 @@ const SEO: React.SFC<SeoProps> = ({
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s`}
       link={[
         {
           href:

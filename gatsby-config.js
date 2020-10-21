@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Grgur Grisogono`,
@@ -32,12 +36,25 @@ module.exports = {
       resolve: `@grgur/gatsby-source-youtube-v3`,
       options: {
         channelId: ["UCsKwL0-e2eHRNa6Ne99AESw"],
-        apiKey: "AIzaSyCZrhJlvE0xYBz-PIr4myisC2er8IE9xNo",
+        apiKey: process.env.GOOGLE_API,
         maxVideos: 20, // Defaults to 50
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [process.env.GOOGLE_ANALYTICS],
+        gtagConfig: {
+          // optimize_id: "OPT_CONTAINER_ID",
+          anonymize_ip: true,
+          cookie_expires: 0,
+        },
+        pluginConfig: {
+          head: false,
+          respectDNT: true,
+        },
+      },
+    },
   ],
 }
